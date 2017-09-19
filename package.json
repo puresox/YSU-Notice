@@ -1,0 +1,38 @@
+{
+  "name": "ysu-notice",
+  "version": "0.0.1",
+  "description": "推送燕山大学通知系统的通知",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puresox/YSU-Notice.git"
+  },
+  "keywords": [
+    "koa2"
+  ],
+  "author": "puresox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puresox/YSU-Notice/issues"
+  },
+  "homepage": "https://github.com/puresox/YSU-Notice#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "koa": "^2.3.0",
+    "moment": "^2.18.1",
+    "nodemailer": "^4.1.0",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
+    "sequelize": "^4.8.4",
+    "sequelize-cli": "^3.0.0-3"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
