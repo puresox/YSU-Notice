@@ -1,6 +1,5 @@
 const Koa = require('koa')
-const notice = require('./notice/notice')
-const jwc = require('./notice/jwc')
+const notice = require('./notice')
 const sendEmail = require('./service/sendEmail')
 
 const app = new Koa()
@@ -17,7 +16,7 @@ setInterval(() => {
 
 try {
   // 先执行一次
-  notice()
+  notice('notice')
   // 之后每10分钟再执行一次
   // noticeFlag = setInterval(notice, 600000) // ms
 } catch (err) {
@@ -31,11 +30,11 @@ try {
   }
 }
 
-/* try {
+try {
   // 先执行一次
-  jwc()
+  notice('jwc')
   // 之后每10分钟再执行一次
-  jwcFlag = setInterval(jwc, 600000) // ms
+  // jwcFlag = setInterval(jwc, 600000) // ms
 } catch (err) {
   jwcErrCount++
   if (jwcErrCount === 3) {
@@ -43,6 +42,6 @@ try {
   }
   // 给管理员发送错误信息的邮件
   sendEmail.toAdmin('<p>jwc.ysu.edu.cn的程序存在严重漏洞，已启动自毁程序</p>')
-} */
+}
 
 app.listen(3000)

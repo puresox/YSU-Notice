@@ -24,13 +24,12 @@
     "cheerio": "^1.0.0-rc.2",
     "koa": "^2.3.0",
     "moment": "^2.18.1",
-    "nodemailer": "^4.1.0",
+    "nodemailer": "^4.1.1",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1",
-    "sequelize": "^4.8.4",
-    "sequelize-cli": "^3.0.0-3"
+    "request": "^2.82.0",
+    "request-promise": "^4.2.2",
+    "sequelize": "^4.11.0"
   },
   "devDependencies": {
     "standard": "^10.0.3"

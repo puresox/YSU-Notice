@@ -2,17 +2,23 @@ const Notice = require('../models').Notice
 
 module.exports = {
   // 获取所有用户的Email
-  createNotice: async function createNotice (name, latestNoticeTitle, latestListETag) {
+  createNotice: async function createNotice (site, latestNoticeTitle, latestListETag) {
     await Notice.sync()
-    await Notice.create({name, latestNoticeTitle, latestListETag})
+    await Notice.create({site, latestNoticeTitle, latestListETag})
   },
 
   // 获取数据库里的最新通知
-  getNoticeInDb: async function getNoticeInDb (name) {
+  getNoticeInDb: async function getNoticeInDb (site) {
     await Notice.sync()
     const notice = await Notice.findOne({where: {
-      name
+      site
     }})
     return notice
+  },
+
+  // 更新数据库与网站同步
+  updateNoticeInDb: async function updateNoticeInDb (site, latestNoticeTitle, latestListETag) {
+    const notice = await this.getNoticeInDb(site)
+    await notice.update({latestNoticeTitle, latestListETag})
   }
 }

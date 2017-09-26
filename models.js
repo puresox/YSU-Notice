@@ -10,18 +10,19 @@ exports.User = sequelize.define('user', {
   // 用户名
   name: {
     type: Sequelize.STRING,
-    primaryKey: true
+    primaryKey: true,
+    unique: true
   },
   // 用户邮箱
   email: {
     type: Sequelize.STRING,
-    unique: 'compositeIndex'
+    unique: true
   }
 })
 
 exports.Notice = sequelize.define('notice', {
-  // 通知来源 notice,jwc
-  name: {
+  // 通知来源网站 notice,jwc
+  site: {
     type: Sequelize.STRING,
     primaryKey: true,
     unique: true
