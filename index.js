@@ -18,7 +18,10 @@ try {
   // 先执行一次
   notice('notice')
   // 之后每10分钟再执行一次
-  // noticeFlag = setInterval(notice, 600000) // ms
+  const noticeInterval = async() => {
+    await notice('notice')
+  }
+  noticeFlag = setInterval(noticeInterval, 600000) // ms
 } catch (err) {
   noticeErrCount++
   if (noticeErrCount === 3) {
@@ -34,7 +37,10 @@ try {
   // 先执行一次
   notice('jwc')
   // 之后每10分钟再执行一次
-  // jwcFlag = setInterval(jwc, 600000) // ms
+  const jwcInterval = async() => {
+    await notice('jwc')
+  }
+  jwcFlag = setInterval(jwcInterval, 600000) // ms
 } catch (err) {
   jwcErrCount++
   if (jwcErrCount === 3) {
