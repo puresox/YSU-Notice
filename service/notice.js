@@ -26,7 +26,7 @@ module.exports = {
     const info = await this.getInfoFromNoticeList(site, listBody, 0)
     // 存储最新的通知
     await NoticeModel.createNotice(site, info.title, listHeaders.etag)
-    sendEmail.toAdmin(`<p>数据库初始化成功，最新文章为《${info.title}》</p><a href='${info.href}'>${info.href}</a>`)
+    sendEmail.toAdmin(`<p>数据库初始化成功，${site}.ysu.edu.cn 的最新文章为《${info.title}》</p><a href='${info.href}'>${info.href}</a>`)
   },
 
   // 获取页面的body和headers
@@ -96,7 +96,7 @@ module.exports = {
   },
 
   // 给用户发送新的通知
-  sendNewNoticesToUsers: async function sendNewNoticesToUsers (newNotices) {
+  sendNewNoticesToUsers: async function sendNewNoticesToUsers (site, newNotices) {
     const emails = await UserModel.getUserEmails()
     if (!emails) {
       return
@@ -109,7 +109,7 @@ module.exports = {
         }, // 发件人
         to: emails, // 收件人
         subject: '燕山大学通知推送服务发现新通知!', // 标题
-        html: `<p>通知监控系统刚刚发现新通知：《${newNotice.title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${newNotice.href}'>${newNotice.href}</a>` // html
+        html: `<p>通知监控系统刚刚在 ${site}.ysu.edu.cn 发现新通知：《${newNotice.title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${newNotice.href}'>${newNotice.href}</a>` // html
       }
       await sendEmail.toUser(mailOptions)
     }

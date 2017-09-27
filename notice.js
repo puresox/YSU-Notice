@@ -25,7 +25,7 @@ module.exports = async(site) => {
   // 获取比数据库里更新的通知信息
   const newNotices = await NoticeService.getNewNoticesOfNotice(site, listBody)
   // 给用户发送新的通知
-  await NoticeService.sendNewNoticesToUsers(newNotices)
+  await NoticeService.sendNewNoticesToUsers(site, newNotices)
   // 更新数据库与网站同步
   await NoticeModel.updateNoticeInDb(site, newNotices[0].title, listHeaders.etag)
 }
