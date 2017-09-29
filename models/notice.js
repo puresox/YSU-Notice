@@ -20,5 +20,11 @@ module.exports = {
   updateNoticeInDb: async function updateNoticeInDb (site, latestNoticeTitle, latestListETag) {
     const notice = await this.getNoticeInDb(site)
     await notice.update({latestNoticeTitle, latestListETag})
+  },
+
+  // 更新数据库etag与网站同步
+  updateETagInDb: async function updateETagInDb (site, latestListETag) {
+    const notice = await this.getNoticeInDb(site)
+    await notice.update({latestListETag})
   }
 }

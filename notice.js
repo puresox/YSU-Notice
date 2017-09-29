@@ -24,6 +24,10 @@ module.exports = async(site) => {
   }
   // 获取比数据库里更新的通知信息
   const newNotices = await NoticeService.getNewNoticesOfNotice(site, listBody)
+  if (newNotices.length === 0) {
+    await NoticeModel.updateETagInDb(site, listHeaders.etag)
+    return
+  }
   // 给用户发送新的通知
   await NoticeService.sendNewNoticesToUsers(site, newNotices)
   // 更新数据库与网站同步
