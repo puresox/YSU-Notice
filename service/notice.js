@@ -98,7 +98,7 @@ module.exports = {
   // 给用户发送新的通知
   sendNewNoticesToUsers: async function sendNewNoticesToUsers (site, newNotices) {
     const emails = await UserModel.getUserEmails()
-    if (!emails) {
+    if (emails.length === 0) {
       return
     }
     for (var newNotice of newNotices) {
