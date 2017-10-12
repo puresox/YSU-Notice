@@ -39,7 +39,9 @@ module.exports = {
     return request(options).then(response => Promise.all([
       cheerio.load(response.body),
       response.headers
-    ]))
+    ])).catch((err) => {
+      console.log(err)
+    })
   },
 
   // 通知列表页是否改变
