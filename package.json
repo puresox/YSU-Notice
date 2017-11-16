@@ -22,16 +22,17 @@
   "homepage": "https://github.com/puresox/YSU-Notice#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "koa": "^2.3.0",
-    "moment": "^2.18.1",
-    "nodemailer": "^4.1.1",
-    "pg": "^7.3.0",
+    "moment": "^2.19.2",
+    "nodemailer": "^4.4.0",
+    "pg": "^7.4.0",
     "pg-hstore": "^2.3.2",
-    "request": "^2.82.0",
+    "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.11.0"
+    "sequelize": "^4.22.7"
   },
   "devDependencies": {
-    "standard": "^10.0.3"
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   }
 }
