@@ -38,9 +38,7 @@ module.exports = {
     };
     return request(options)
       .then(response => Promise.all([cheerio.load(response.body), response.headers]))
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(console.log);
   },
 
   // 通知列表页是否改变
@@ -87,14 +85,12 @@ module.exports = {
     for (let index = 0; index < 6; index += 1) {
       const newNotice = this.getInfoFromNoticeList(site, listBody, index);
       if (newNotice.title !== notice.latestNoticeTitle) {
-        if (newNotice.href.length <= 45) {
-          newNotices.push(newNotice);
-        }
+        newNotices.push(newNotice);
       } else {
         return newNotices;
       }
     }
-    throw new Error('数据库与网站通知同步失败，将强制更新。');
+    return Promise.reject(newNotices);
   },
 
   // 给用户发送新的通知
@@ -105,6 +101,9 @@ module.exports = {
     }
     const emailPromises = [];
     newNotices.forEach(({ title, href }) => {
+      if (href.length <= 45) {
+        return;
+      }
       const mailOptions = {
         from: {
           name: 'YSUNotice',

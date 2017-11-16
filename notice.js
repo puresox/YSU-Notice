@@ -23,13 +23,20 @@ module.exports = async (site) => {
     return;
   }
   // 获取比数据库里更新的通知信息
-  const newNotices = await NoticeService.getNewNoticesOfNotice(site, listBody);
-  if (newNotices.length === 0) {
-    await NoticeModel.updateETagInDb(site, listHeaders.etag);
-    return;
-  }
-  // 给用户发送新的通知
-  await NoticeService.sendNewNoticesToUsers(site, newNotices);
-  // 更新数据库与网站同步
-  await NoticeModel.updateNoticeInDb(site, newNotices[0].title, listHeaders.etag);
+  await NoticeService.getNewNoticesOfNotice(site, listBody)
+    .then(async (newNotices) => {
+      if (newNotices.length === 0) {
+        await NoticeModel.updateETagInDb(site, listHeaders.etag);
+        return;
+      }
+      // 给用户发送新的通知
+      await NoticeService.sendNewNoticesToUsers(site, newNotices);
+      // 更新数据库与网站同步
+      await NoticeModel.updateNoticeInDb(site, newNotices[0].title, listHeaders.etag);
+    })
+    .catch(async (newNotices) => {
+      // 更新数据库与网站同步
+      await NoticeModel.updateNoticeInDb(site, newNotices[0].title, listHeaders.etag);
+      throw new Error('数据库与网站通知同步失败，将强制更新。');
+    });
 };
