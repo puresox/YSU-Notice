@@ -84,7 +84,7 @@ module.exports = {
   getNewNoticesOfNotice: async function getNewNoticesOfNotice(site, listBody) {
     const notice = await NoticeModel.getNoticeInDb(site);
     const newNotices = [];
-    for (let index = 0; index < 6; index + 1) {
+    for (let index = 0; index < 6; index += 1) {
       const newNotice = this.getInfoFromNoticeList(site, listBody, index);
       if (newNotice.title !== notice.latestNoticeTitle) {
         if (newNotice.href.length <= 45) {
