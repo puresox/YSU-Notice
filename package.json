@@ -4,13 +4,11 @@
   "description": "推送燕山大学通知系统的通知",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require intelli-espower-loader",
     "start": "node index.js"
   },
   "repository": "git+https://github.com/puresox/YSU-Notice.git",
-  "keywords": [
-    "YSU"
-  ],
+  "keywords": ["YSU"],
   "author": "puresox",
   "license": "ISC",
   "bugs": {
@@ -25,11 +23,14 @@
     "pg-hstore": "^2.3.2",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "sequelize": "^4.22.7"
+    "sequelize": "^4.22.8"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^4.0.1",
+    "power-assert": "^1.4.4"
   }
 }
