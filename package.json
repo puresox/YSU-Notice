@@ -4,7 +4,7 @@
   "description": "推送燕山大学通知系统的通知",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require intelli-espower-loader",
+    "test": "nyc --reporter=lcov mocha --require intelli-espower-loader",
     "start": "node index.js"
   },
   "repository": "git+https://github.com/puresox/YSU-Notice.git",
@@ -31,6 +31,7 @@
     "eslint-plugin-import": "^2.8.0",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
     "power-assert": "^1.4.4"
   }
 }
