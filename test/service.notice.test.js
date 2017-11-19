@@ -1,4 +1,5 @@
 const assert = require('assert');
+const asd = require('../service/notice');
 
 describe('Array', () => {
   describe('#indexOf()', () => {
