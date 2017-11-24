@@ -8,7 +8,9 @@
     "start": "node index.js"
   },
   "repository": "git+https://github.com/puresox/YSU-Notice.git",
-  "keywords": ["YSU"],
+  "keywords": [
+    "YSU"
+  ],
   "author": "puresox",
   "license": "ISC",
   "bugs": {
