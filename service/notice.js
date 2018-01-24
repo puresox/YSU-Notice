@@ -106,7 +106,7 @@ module.exports = {
     }
     const emailPromises = [];
     newNotices.forEach(({ title, href }) => {
-      if (href.length <= 45) {
+      if (href.length >= 50) {
         return;
       }
       const mailOptions = {
