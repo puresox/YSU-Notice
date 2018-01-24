@@ -11,7 +11,10 @@ module.exports = {
   // 判断数据库是否为空
   isNull: async function isNull(site) {
     const notice = await NoticeModel.getNoticeInDb(site);
-    return !notice;
+    if (notice.latestNoticeTitle === '') {
+      return true;
+    }
+    return false;
   },
 
   // 初始化数据库
@@ -25,8 +28,10 @@ module.exports = {
     // 获取第一条通知的信息
     const info = await this.getInfoFromNoticeList(site, listBody, 0);
     // 存储最新的通知
-    await NoticeModel.createNotice(site, info.title, listHeaders.etag);
-    sendEmail.toAdmin(`<p>数据库初始化成功，${site}.ysu.edu.cn 的最新文章为《${info.title}》</p><a href='${info.href}'>${info.href}</a>`);
+    await NoticeModel.updateNoticeInDb(site, info.title, listHeaders.etag);
+    sendEmail.toAdmin(`<p>数据库初始化成功，${site}.ysu.edu.cn 的最新文章为《${info.title}》</p><a href='${
+      info.href
+    }'>${info.href}</a>`);
   },
 
   // 获取页面的body和headers

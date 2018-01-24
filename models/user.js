@@ -1,14 +1,26 @@
-const { User } = require('../models');
+const { db } = require('../models');
 
 module.exports = {
+  // 添加用户
+  createUser: function createUser(name, email) {
+    const userNum = db
+      .get('user')
+      .find({ email })
+      .value();
+    if (!userNum) {
+      db
+        .get('user')
+        .push({ name, email })
+        .write();
+    }
+  },
+
   // 获取所有用户的Email
-  getUserEmails: async function getUserEmails() {
-    await User.sync();
-    const users = await User.findAll();
-    const emails = [];
-    users.forEach((user) => {
-      emails.push(user.email);
-    });
-    return emails;
+  getUserEmails: function getUserEmails() {
+    const emails = db
+      .get('user')
+      .map('email')
+      .value();
+    return [...new Set(emails)];
   },
 };

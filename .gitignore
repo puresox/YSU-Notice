@@ -63,3 +63,5 @@ typings/
 # config
 config
 
+#db
+db.json

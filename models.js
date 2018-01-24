@@ -1,38 +1,20 @@
 /**
  * 数据库models
  */
-const Sequelize = require('sequelize');
-const config = require('./config/config');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
-const sequelize = new Sequelize(config.postgres);
+const adapter = new FileSync('db.json');
+const db = low(adapter);
 
-exports.User = sequelize.define('user', {
-  // 用户名
-  name: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-    unique: true,
-  },
-  // 用户邮箱
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-  },
-});
+db
+  .defaults({
+    notice: [
+      { site: 'notice', latestNoticeTitle: '', latestListETag: '' },
+      { site: 'jwc', latestNoticeTitle: '', latestListETag: '' },
+    ],
+    user: [{ name: 'puresox', email: 'puresox@163.com' }],
+  })
+  .write();
 
-exports.Notice = sequelize.define('notice', {
-  // 通知来源网站 notice,jwc
-  site: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-    unique: true,
-  },
-  // 最新的通知标题
-  latestNoticeTitle: {
-    type: Sequelize.STRING,
-  },
-  // 最新的通知列表的ETag
-  latestListETag: {
-    type: Sequelize.STRING,
-  },
-});
+exports.db = db;
