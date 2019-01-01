@@ -19,14 +19,14 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "lowdb": "^1.0.0",
-    "moment": "^2.22.2",
-    "nodemailer": "^4.6.7",
-    "request": "^2.87.0",
+    "moment": "^2.23.0",
+    "nodemailer": "^5.0.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
-    "eslint": "^5.1.0",
-    "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-plugin-import": "^2.13.0"
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }

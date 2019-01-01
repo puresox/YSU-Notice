@@ -1,7 +1,7 @@
-const UserModel = require('../models/user');
-const NoticeModel = require('../models/notice');
 const cheerio = require('cheerio');
 const request = require('request-promise');
+const UserModel = require('../models/user');
+const NoticeModel = require('../models/notice');
 const sendEmail = require('../service/sendEmail');
 const config = require('../config/config');
 
@@ -20,18 +20,19 @@ module.exports = {
   // 初始化数据库
   initNotice: async function init(site) {
     // 获取通知列表
-    const uri =
-      site === 'notice'
-        ? 'http://notice.ysu.edu.cn/index/tzgg/xzbm/xzbgs.htm'
-        : 'http://jwc.ysu.edu.cn/tzgg1.htm';
+    const uri = site === 'notice'
+      ? 'http://notice.ysu.edu.cn/index/tzgg/xzbm/xzbgs.htm'
+      : 'http://jwc.ysu.edu.cn/tzgg1.htm';
     const [listBody, listHeaders] = await this.getBodyAndHeaders(uri);
     // 获取第一条通知的信息
     const info = await this.getInfoFromNoticeList(site, listBody, 0);
     // 存储最新的通知
     await NoticeModel.updateNoticeInDb(site, info.title, listHeaders.etag);
-    sendEmail.toAdmin(`<p>数据库初始化成功，${site}.ysu.edu.cn 的最新文章为《${info.title}》</p><a href='${
-      info.href
-    }'>${info.href}</a>`);
+    sendEmail.toAdmin(
+      `<p>数据库初始化成功，${site}.ysu.edu.cn 的最新文章为《${info.title}》</p><a href='${
+        info.href
+      }'>${info.href}</a>`,
+    );
   },
 
   // 获取页面的body和headers
@@ -58,28 +59,25 @@ module.exports = {
   // 从notice列表中获取某一条通知的信息
   getInfoFromNoticeList: function getInfoFromNoticeList(site, listBody, num) {
     const context = site === 'notice' ? `#lineu12_${num}` : `#lineu3_${num}`;
-    const uri =
-      site === 'notice'
-        ? 'http://notice.ysu.edu.cn/index/tzgg/xzbm/xzbgs.htm'
-        : 'http://jwc.ysu.edu.cn/tzgg1.htm';
+    const uri = site === 'notice'
+      ? 'http://notice.ysu.edu.cn/index/tzgg/xzbm/xzbgs.htm'
+      : 'http://jwc.ysu.edu.cn/tzgg1.htm';
     // 获取通知链接
-    let href =
-      listBody('a', context)
-        .attr('href')
-        .replace(/\.\.\//g, '') || uri;
+    let href = listBody('a', context)
+      .attr('href')
+      .replace(/\.\.\//g, '') || uri;
     const patt = new RegExp('http://');
     if (!patt.test(href)) {
       href = `http://${site}.ysu.edu.cn/${href}`;
     }
     // 获取通知标题
-    const title =
-      site === 'notice'
-        ? listBody('.list-txt-1', context)
-          .text()
-          .trim() || '获取标题出错'
-        : listBody('a', context)
-          .attr('title')
-          .trim() || '获取标题出错';
+    const title = site === 'notice'
+      ? listBody('.list-txt-1', context)
+        .text()
+        .trim() || '获取标题出错'
+      : listBody('a', context)
+        .attr('title')
+        .trim() || '获取标题出错';
     return { href, title };
   },
 
@@ -115,7 +113,7 @@ module.exports = {
           address: EmailAdress,
         }, // 发件人
         to: emails, // 收件人
-        subject: '燕山大学通知推送服务发现新通知!', // 标题
+        subject: `《${title}》`, // 标题
         html: `<p>通知监控系统刚刚在 ${site}.ysu.edu.cn 发现新通知：《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
       };
       emailPromises.push(sendEmail.toUser(mailOptions));
